@@ -36,4 +36,15 @@ class LinkedListTest {
         linkedList.addLast(30);
         System.out.println(linkedList.getKthFromEnd(1));
     }
+
+    @Test
+    void isPalindrome(){
+        LinkedList linkedList = new LinkedList();
+        linkedList.addLast(10);
+        linkedList.addLast(20);
+//        linkedList.addLast(30);
+//        linkedList.addLast(20);
+//        linkedList.addLast(40);
+        System.out.println(linkedList.isPalindrome());
+    }
 }

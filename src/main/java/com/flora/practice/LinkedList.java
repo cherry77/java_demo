@@ -141,6 +141,54 @@ public class LinkedList {
         return p.value;
     }
 
+    /**
+     * 判断一个链表是否是回文链表
+     * 1.快慢指针（折半法）找到前半部分的最后一个节点
+     * 2.翻转后半部分
+     * 3.遍历逐个值比较
+     * 4.风险：该方法虽然可以将空间复杂度降到 O(1)O(1)，但是在并发环境下，该方法也有缺点。在并发环境下，函数运行时需要锁定其他线程或进程对链表的访问，因为在函数执行过程中链表会被修改。
+     * @return
+     */
+    public boolean isPalindrome() {
+        if(first == null){
+            return true;
+        }
+        // 快慢指针找到前半部分链表的尾节点
+        var slow = first;
+        var fast = first;
+        while (fast.next != null && fast.next.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        // 反转后半部分链表
+        var secondHalf = reverse(slow);
+        // 逐个值比较
+        var p = first;
+        var q = secondHalf;
+        while (p != null && q != null){
+            if(p.value != q.value){
+                return false;
+            }
+            p = p.next;
+            q = q.next;
+        }
+        // 还原链表并返回结果
+        first.next = reverse(secondHalf);
+        return true;
+    }
+
+    private Node reverse(Node head){
+        Node pre = null;
+        var cur = head;
+        while (cur != null){
+            var next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+        }
+        return pre;
+    }
+
     private Node getPrevious(Node node){
         var cur = first;
         while (cur != null){
